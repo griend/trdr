@@ -40,6 +40,7 @@ def __init_config(config: hash) -> None:
         raise FileNotFoundError(file)
 
     config['app_name'] = 'trader'
+    config['db_filename'] = os.path.join(config['db_dir'], 'trader.db')
 
 
 def __daily_log_filename():

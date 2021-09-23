@@ -28,14 +28,14 @@ def connect(config: hash) -> Bitvavo:
 
 
 def get_time(bitvavo: Bitvavo) -> datetime:
-    logger.debug('time() - Start')
+    logger.debug('get_time() - Start')
 
     response = bitvavo.time()
     time = response['time']
     timezone = ZoneInfo('Europe/Amsterdam')
     dt = datetime.fromtimestamp(time / 1000, timezone)
 
-    logger.debug('time() - Finish')
+    logger.debug('get_time() - Finish')
     return dt
 
 
