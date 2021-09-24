@@ -1,9 +1,12 @@
 --
--- sqlite3 ~/var/trader/db/trader.db < btc_close.sql
+-- sqlite3 ~/var/trader/db/trader.db < btc.sql
 --
 SELECT   date(d.timestamp, 'unixepoch'),
-         m.market,
-         d.close
+         d.open,
+         d.high,
+         d.low,
+         d.close,
+         d.volume
 FROM     markets m,
          market_daily_prices d
 WHERE    m.market = 'BTC-EUR'
