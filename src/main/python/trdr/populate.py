@@ -544,8 +544,8 @@ if __name__ == '__main__':
     try:
         logger.info(f'Start - {__file__}')
         address = get_public_address()
-        hostname = get_hostname(address)
-        logger.info(f'Hostname: {hostname} ({address})')
+        # hostname = get_hostname(address)
+        logger.info(f'Hostname: {address}')
 
         bitvavo = connect(config)
         populate_markets(bitvavo)
