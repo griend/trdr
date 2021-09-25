@@ -544,7 +544,6 @@ if __name__ == '__main__':
     try:
         logger.info(f'Start - {__file__}')
         address = get_public_address()
-        # hostname = get_hostname(address)
         logger.info(f'Hostname: {address}')
 
         bitvavo = connect(config)
@@ -552,14 +551,6 @@ if __name__ == '__main__':
         populate_market_updates()
         populate_daily_prices(bitvavo)
         populate_hourly_prices(bitvavo)
-
-        # start = int(datetime(2019, 1, 1, 0, 0, 0).timestamp())
-        # end = int(datetime.now().timestamp())
-        # step = interval = 14 * 24 * 60 * 60
-        #
-        # for n in range(start, end, step):
-        #     populate_hourly_prices(bitvavo)
-        #     time.sleep(30)
 
         logger.info(f'Finish - {__file__}')
     except Exception as e:
