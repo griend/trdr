@@ -1,0 +1,10 @@
+[Unit]
+Description=Trader Polulates Timer
+Requires=trdr-populates.service
+
+[Timer]
+Unit=trdr-populates.service
+OnCalendar=*-*-* 01:45:00
+
+[Install]
+WantedBy=timers.target

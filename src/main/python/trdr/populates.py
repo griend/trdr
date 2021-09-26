@@ -366,6 +366,7 @@ def populate_daily_prices(bitvavo: Bitvavo) -> None:
 
         dt = datetime.fromtimestamp(start_epoch)
         logger.info(f'Updated daily prices: {market} ({dt})')
+        connection.commit()
 
     connection.commit()
     connection.close()
@@ -533,6 +534,7 @@ def populate_hourly_prices(bitvavo: Bitvavo) -> None:
 
         dt = datetime.fromtimestamp(start_epoch)
         logger.info(f'Updated hourly prices: {market} ({dt})')
+        connection.commit()
 
     connection.commit()
     connection.close()

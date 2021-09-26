@@ -36,6 +36,7 @@ def __init_config(config: hash) -> None:
 
         config['bitvavo_api_key'] = data['BITVAVO']['API_KEY']
         config['bitvavo_api_secret'] = data['BITVAVO']['API_SECRET']
+        config['telegram_token'] = data['TELEGRAM']['TOKEN']
     else:
         raise FileNotFoundError(file)
 

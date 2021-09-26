@@ -1,0 +1,12 @@
+[Unit]
+Description=Trader Candles Service
+
+[Service]
+Type=simple
+Environment=PYTHONPATH=/home/cees/prj/trdr/src/main/python
+ExecStart=/home/cees/prj/trdr/venv/bin/python3 -m trdr.candles
+Restart=always
+RestartSec=1s
+
+[Install]
+WantedBy=default.target
