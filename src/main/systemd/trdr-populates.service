@@ -4,7 +4,7 @@ Description=Trader Populates Service
 [Service]
 Type=oneshot
 Environment=PYTHONPATH=/home/cees/prj/trdr/src/main/python
-ExecStart=/home/cees/prj/trdr/venv/bin/python3 -m trdr.populate
+ExecStart=/home/cees/prj/trdr/venv/bin/python3 -m trdr.populates
 
 [Install]
 WantedBy=default.target
