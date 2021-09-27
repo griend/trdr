@@ -10,7 +10,7 @@ import time
 
 from python_bitvavo_api.bitvavo import Bitvavo
 
-from . import config
+from . import config, init_logging
 from .trader import connect
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ candle_cache = {}
 
 def signal_handler(signum, frame) -> None:
     '''
-    A SIGHUP is received from the operating system.
+    A SIGTERM is received from the operating system.
 
     :param signum:
     :param frame:
@@ -33,7 +33,7 @@ def signal_handler(signum, frame) -> None:
     running = False
     logger.info(f'Stopping...')
 
-    logger.debug(f'handler() - Fininsh')
+    logger.debug(f'handler() - Finish')
 
 
 def populate_markets() -> None:
@@ -729,16 +729,16 @@ def candle(bitvavo: Bitvavo) -> None:
     websocket = bitvavo.newWebsocket()
     websocket.setErrorCallback(errorCallback)
 
-    subcriptions = [
+    subscriptions = [
         'BTC-EUR',
         'ETH-EUR',
     ]
 
-    for subcription in subcriptions:
-        websocket.subscriptionCandles(subcription, '1m', callback_1m)
-        websocket.subscriptionCandles(subcription, '5m', callback_5m)
-        websocket.subscriptionCandles(subcription, '1h', callback_1h)
-        websocket.subscriptionCandles(subcription, '1d', callback_1d)
+    for subscription in subscriptions:
+        websocket.subscriptionCandles(subscription, '1m', callback_1m)
+        websocket.subscriptionCandles(subscription, '5m', callback_5m)
+        websocket.subscriptionCandles(subscription, '1h', callback_1h)
+        websocket.subscriptionCandles(subscription, '1d', callback_1d)
 
     while running:
         time.sleep(1)
@@ -747,11 +747,13 @@ def candle(bitvavo: Bitvavo) -> None:
 
 
 if __name__ == '__main__':
+    init_logging(os.path.join(config['log_dir'], 'candles.log'))
+
     try:
         logger.info(f'Start - {__file__}')
         logger.info(f'PID: {os.getpid()}')
 
-        signal.signal(signal.SIGHUP, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
 
         # cache markets metadata
         populate_markets()

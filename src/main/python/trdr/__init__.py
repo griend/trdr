@@ -36,7 +36,7 @@ def __init_config(config: hash) -> None:
 
         config['bitvavo_api_key'] = data['BITVAVO']['API_KEY']
         config['bitvavo_api_secret'] = data['BITVAVO']['API_SECRET']
-        config['telegram_token'] = data['TELEGRAM']['TOKEN']
+        #config['telegram_token'] = data['TELEGRAM']['TOKEN']
     else:
         raise FileNotFoundError(file)
 
@@ -44,18 +44,10 @@ def __init_config(config: hash) -> None:
     config['db_filename'] = os.path.join(config['db_dir'], 'trader.db')
 
 
-def __daily_log_filename():
-    now = datetime.datetime.now()
-    name = f'{config["app_name"]}-{now.strftime("%Y%m%d")}.log'
-    filename = os.path.join(config['log_dir'], name)
-    return filename
-
-
-def __init_logging(config: hash) -> None:
+def init_logging(log_filename: str = 'trader.log') -> None:
     format = logging.Formatter('%(asctime)s %(name)s %(levelname)s - %(message)s')
 
-    fh = logging.handlers.TimedRotatingFileHandler(filename=__daily_log_filename(), when="d")
-    fh.rotation_filename = __daily_log_filename
+    fh = logging.handlers.TimedRotatingFileHandler(filename=log_filename, when="midnight", backupCount=30)
     fh.setFormatter(format)
     fh.setLevel(logging.DEBUG)
 
@@ -69,13 +61,17 @@ def __init_logging(config: hash) -> None:
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+
     logger.addHandler(fh)
     logger.addHandler(console)
 
 
 __init_directories(config)
 __init_config(config)
-__init_logging(config)
+init_logging()
 
 if __name__ == '__main__':
     import pprint

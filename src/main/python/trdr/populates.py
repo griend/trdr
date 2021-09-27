@@ -1,12 +1,13 @@
 import logging
+import os
 import sqlite3
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from python_bitvavo_api.bitvavo import Bitvavo
 
-from . import config
-from .hostname import get_hostname, get_public_address
+from . import config, init_logging
+from .hostname import get_public_address
 from .trader import connect
 
 logger = logging.getLogger(__name__)
@@ -543,6 +544,8 @@ def populate_hourly_prices(bitvavo: Bitvavo) -> None:
 
 
 if __name__ == '__main__':
+    init_logging(os.path.join(config['log_dir'], 'populates.log'))
+
     try:
         logger.info(f'Start - {__file__}')
         address = get_public_address()

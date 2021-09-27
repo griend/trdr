@@ -1,7 +1,8 @@
 import logging
+import os
 import sqlite3
 
-from . import config
+from . import config, init_logging
 
 logger = logging.getLogger(__name__)
 
@@ -248,6 +249,8 @@ def drop_db():
 
 
 if __name__ == '__main__':
+    init_logging(os.path.join(config['log_dir'], 'database.log'))
+
     try:
         logger.info(f'Start - {__file__}')
 
